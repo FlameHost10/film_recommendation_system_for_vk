@@ -43,7 +43,7 @@ def get_similar_movies(data, title, n):
     df['s'] = (df['k_rating'] - k_rating) ** 2 + (df['year'] - year) ** 2
     df['s'] = df['s'].apply(get_s)
 
-    return df['k_rating'].sort_values(ascending=False).head(n)
+    return df[['k_rating', 's']].sort_values(by='s').head(n + 1)
 
 
 movies = pd.read_csv('movies.csv')
