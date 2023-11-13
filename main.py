@@ -24,7 +24,7 @@ def get_s(data):
     return sqrt(data)
 
 def get_genre_similarity(data, genres):
-
+    return similarityCoefficientByGenre(data, genres)
 
 def get_similar_movies(data, title, n, genre_similarity_file='data/genres_similarity.json'):
     df = pd.DataFrame()
@@ -40,12 +40,12 @@ def get_similar_movies(data, title, n, genre_similarity_file='data/genres_simila
     k_rating = df['k_rating'].loc[df['title'] == title].values[0]
     title_genres = df['genres'].loc[df['title'] == title].values[0]
 
-    df['genre_similarity'] = df['genres'].apply(get_genre_similarity, genre = genre, genre2 = title_genre) #надо добавить столбец, в котором
-    title_gen = df['genre_similarity'].loc[df['title'] == title].values[0]
-    print(title_gen)
+
+    df['genre_similarity'] = df['genres'].apply(get_genre_similarity, genre = title_genres) #надо добавить столбец, в котором
+    title_genre_k = df['genre_similarity'].loc[df['title'] == title].values[0]
     print(k_rating)
     print(year)
-    df['s'] = (df['k_rating'] - k_rating) ** 2 + (df['year'] - year) ** 2 + (df['genre_similarity'] - title_gen) ** 2
+    df['s'] = (df['k_rating'] - k_rating) ** 2 + (df['year'] - year) ** 2 + (df['genre_similarity'] - title_genre_k) ** 2
     df['s'] = df['s'].apply(get_s)
 
     return df[['k_rating', 's']].sort_values(by='s').head(n + 1)
