@@ -10,7 +10,7 @@ def similarityCoefficientByGenre(our_genres):
         title_genres = f.readline().split()
         f.close()
     sum_c = 0  # некоторый коэффициент схожести для жанров 2 фильмов
-
+    genre_factor = 0.8 #весовой коэффициент для жанров
     if len(title_genres) == 0 or len(our_genres) == 0:  # если нет жанра то по жанрам фильмы несовместимы
         return 0
     if title_genres == our_genres:  # если жанры одинаковы, то по жанрам фильмы идентичны
@@ -21,7 +21,7 @@ def similarityCoefficientByGenre(our_genres):
             cur_sum += get_с(i, j)
         cur_sum = len(our_genres)
         sum_c += cur_sum
-    return sum_c / len(title_genres) * 0.8
+    return sum_c / len(title_genres) * genre_factor
 
 
 def union_minus_intersection(list1, list2):
