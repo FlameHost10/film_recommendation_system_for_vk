@@ -9,31 +9,19 @@ def similarityCoefficientByGenre(our_genres):
     with open("data/title.txt", "r") as f:
         title_genres = f.readline().split()
         f.close()
-    diff = union_minus_intersection(title_genres, our_genres)
     sum_c = 0  # некоторый коэффициент схожести для жанров 2 фильмов
 
     if len(title_genres) == 0 or len(our_genres) == 0:  # если нет жанра то по жанрам фильмы несовместимы
         return 0
     if title_genres == our_genres:  # если жанры одинаковы, то по жанрам фильмы идентичны
         return 1
-
-    if len(title_genres) >= len(our_genres):
-        for i in diff:
-            cur_sum = 0
-            for j in our_genres:
-                cur_sum += get_с(i, j)
-            cur_sum = len(our_genres)
-            sum_c += cur_sum
-        return sum_c / len(diff) * 0.8
-
-    if len(title_genres) < len(our_genres):
-        for i in diff:
-            cur_sum = 0
-            for j in title_genres:
-                cur_sum += get_с(i, j)
-            cur_sum /= len(our_genres)
-            sum_c += cur_sum
-        return sum_c / len(diff) * 0.8
+    for i in title_genres:
+        cur_sum = 0
+        for j in our_genres:
+            cur_sum += get_с(i, j)
+        cur_sum = len(our_genres)
+        sum_c += cur_sum
+    return sum_c / len(title_genres) * 0.8
 
 
 def union_minus_intersection(list1, list2):
